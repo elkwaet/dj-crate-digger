@@ -33,11 +33,13 @@ def save_tracklist(metadata: Dict[str, Any], tracks: List[str], detected: bool) 
     """
     ensure_crate_dir()
     
-    # Date du jour pour le nom du fichier et les métadonnées
-    today_str = datetime.now().strftime('%Y-%m-%d')
+    # Date et heure actuelles pour le nom du fichier et les métadonnées
+    now = datetime.now()
+    date_file_str = now.strftime('%Y-%m-%d(%Hh%M)')
+    analysis_date_str = now.strftime('%Y-%m-%d %H:%M')
     title_slug = slugify(metadata.get('title', 'video'))
     
-    filename = f"{today_str}_{title_slug}.txt"
+    filename = f"{date_file_str}_{title_slug}.txt"
     filepath = os.path.join(CRATE_DIR, filename)
     
     # Contenu structuré
@@ -48,7 +50,7 @@ def save_tracklist(metadata: Dict[str, Any], tracks: List[str], detected: bool) 
         f"Titre de la vidéo   : {metadata.get('title')}",
         f"Lien YouTube        : {metadata.get('webpage_url')}",
         f"Date de publication : {metadata.get('upload_date')}",
-        f"Date d'analyse      : {today_str}",
+        f"Date d'analyse      : {analysis_date_str}",
         "==================================================",
         "",
     ]
