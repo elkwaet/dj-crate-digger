@@ -13,9 +13,11 @@ import parser
 import storage
 import main as tui_main
 
+import version
+
 console = Console()
 
-VERSION = "1.1.0"
+VERSION = version.__version__
 AUTHOR = "@qwashenergy (Elkwaet)"
 LICENSE_HINT = "Copyright (c) 2026 Elkwaet - MIT License"
 
