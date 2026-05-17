@@ -12,56 +12,107 @@
 *   **Parsing intelligent (Regex Engine)** : Repère et isole les timestamps (`00:00`, `[01:23]`, etc.) et la numérotation séquentielle des pistes.
 *   **Anti-Spam intégré** : Élimine automatiquement les publicités, liens d'autopromotion (Patreon, Instagram, Spotify, etc.) et lignes inutiles de la description brute.
 *   **TUI premium Noir & Blanc** : Interface interactive élégante et minimaliste construite avec `rich` et `questionary`.
-*   **Stockage structuré (Crate)** : Enregistre automatiquement les tracklists formatées dans des fichiers `.txt` locaux sous `./crate/` nommés par date et titre de la vidéo.
+*   **Stockage centralisé persistant** : Enregistre automatiquement les tracklists formatées dans des fichiers `.txt` locaux sous `~/dj-crate-digger/crate/` nommés au format strict `YYYY-MM-DD(HHhMM)_[slug].txt`.
+*   **Exécution globale** : Palette de commandes complète accessible de n'importe quel répertoire avec la commande globale `cratedig`.
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Installation globale (sans sudo)
 
-1.  **Cloner le dépôt** :
+1.  **Cloner le dépôt dans ton espace de travail (ex: `~/PROJ-DEV/`)** :
     ```bash
-    git clone [repo-url]
+    git clone [repo-url] dj-crate-digger
     cd dj-crate-digger
     ```
 
-2.  **Créer l'environnement virtuel & installer les dépendances** :
+2.  **Lancer le script d'installation locale** :
     ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
+    ./install.sh
+    ```
+    Ce script va automatiquement :
+    *   Rendre le wrapper `bin/cratedig` exécutable.
+    *   Créer le lien symbolique `~/.local/bin/cratedig` pointant vers le projet.
+    *   Créer le dossier persistant global `~/dj-crate-digger/crate/`.
+    *   Ajouter `~/.local/bin` à ton `PATH` dans ton `~/.zshrc` ou `~/.bash_profile` (si ce n'est pas déjà fait).
+
+3.  **Recharger ton terminal** :
+    ```bash
+    source ~/.zshrc
     ```
 
 ---
 
-## 🚀 Utilisation
+## 🚀 Palette de commandes (`cratedig`)
 
-Lance le TUI interactif en une commande :
+Tu peux lancer la commande `cratedig` depuis n'importe quel dossier de ta machine :
 
 ```bash
-.venv/bin/python src/main.py
+# Lancement de l'interface interactive TUI en plein écran
+cratedig
+
+# Ou explicitement
+cratedig tui
 ```
 
-### Options du menu principal :
-- **🔍 Analyser une nouvelle vidéo** : Saisis simplement l'URL d'une vidéo YouTube (ex: DJ Set, podcast, mix) et observe l'extraction.
-- **📂 Parcourir les tracklists locales** : Affiche la liste des tracklists de ton crate local triées par date. Tu peux les lire directement ou les supprimer.
-- **🚪 Quitter** : Quitte l'application proprement.
+### Commandes CLI directes :
+
+*   **🔍 Analyser une nouvelle vidéo** :
+    ```bash
+    cratedig digest <URL_YOUTUBE>
+    ```
+    Extrait instantanément la tracklist, l'affiche dans un tableau premium et la sauvegarde dans ton crate.
+
+*   **📂 Lister tes tracklists** :
+    ```bash
+    cratedig list
+    # ou
+    cratedig crate
+    ```
+    Affiche la liste indexée de toutes les tracklists existantes.
+
+*   **📖 Consulter une tracklist** :
+    ```bash
+    cratedig view <ID_ou_slug>
+    ```
+    Affiche le contenu détaillé (ex: `cratedig view 1` pour le fichier le plus récent ou `cratedig view lesinfocus`).
+
+*   **❌ Supprimer une tracklist** :
+    ```bash
+    cratedig delete <ID_ou_slug>
+    ```
+    Demande une confirmation et supprime définitivement le fichier du crate.
+
+*   **📍 Localiser le stockage** :
+    ```bash
+    cratedig path
+    ```
+    Affiche le chemin absolu du répertoire crate global (`~/dj-crate-digger/crate/`).
+
+*   **ℹ️ Version & Crédits** :
+    ```bash
+    cratedig version
+    ```
 
 ---
 
 ## 📂 Structure du projet
 
 ```text
-├── crate/               # Dossier de stockage des tracklists (.txt)
+├── bin/
+│   └── cratedig         # Script wrapper de lancement global
 ├── src/
-│   ├── main.py          # Point d'entrée & Interface TUI interactive
+│   ├── cli.py           # Routeur de la palette de commandes CLI
+│   ├── main.py          # Point d'entrée TUI interactif
 │   ├── extractor.py     # Logique d'extraction via yt-dlp
 │   ├── parser.py        # Logique de parsing de tracklist et anti-spam
-│   └── storage.py       # Logique de persistance et lecture des fichiers
+│   └── storage.py       # Logique de stockage persistant global (~/dj-crate-digger/crate)
 ├── tests/
 │   ├── test_parser.py   # Tests unitaires du moteur de parsing
 │   └── test_integration.py # Test d'intégration réel avec YouTube
 ├── wiki/                # Documentation détaillée du projet
+├── install.sh           # Script d'installation locale non-root
 ├── requirements.txt     # Dépendances Python
+├── LICENSE              # Licence MIT du projet
 └── README.md
 ```
 
@@ -69,4 +120,7 @@ Lance le TUI interactif en une commande :
 
 ## ⚖️ Licence
 
-Ce projet est sous licence MIT. Libre à toi de le forker et de l'améliorer !
+Ce projet est sous licence MIT. Libres droits de modification et d'utilisation.
+
+---
+Développé pour la communauté par **@qwashenergy**.
