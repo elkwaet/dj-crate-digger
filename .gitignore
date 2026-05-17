@@ -1,0 +1,10 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Système
+.DS_Store
+
+# Crate (Contient les tracklists personnelles de l'utilisateur, à ne pas versionner par défaut)
+crate/*.txt
