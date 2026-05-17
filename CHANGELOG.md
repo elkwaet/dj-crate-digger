@@ -4,6 +4,11 @@ Toutes les modifications notables apportées au projet **DJ Crate Digger** seron
 
 ---
 
+## [1.0.1] - 2026-05-17
+
+### UPDATE
+- Amélioration de [src/storage.py](file:///Users/elk/.gemini/antigravity/scratch/dj-crate-digger/src/storage.py) : la date d'analyse contient désormais l'heure courante (format `YYYY-MM-DD(HHhMM)`) dans le nom du fichier généré et dans ses métadonnées internes.
+
 ## [1.0.0] - 2026-05-17
 
 ### DOC
