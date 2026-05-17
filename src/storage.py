@@ -3,9 +3,8 @@ import re
 from datetime import datetime
 from typing import List, Dict, Any
 
-# Chemin absolu du dossier crate à la racine du projet
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CRATE_DIR = os.path.join(PROJECT_ROOT, 'crate')
+# Chemin absolu du dossier crate dans le HOME de l'utilisateur (centralisé)
+CRATE_DIR = os.path.expanduser('~/dj-crate-digger/crate')
 
 def ensure_crate_dir() -> None:
     """
