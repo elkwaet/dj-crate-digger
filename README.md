@@ -17,11 +17,27 @@
 
 ---
 
-## 🛠️ Installation globale (sans sudo)
+## 🛠️ Installation
+
+### Option 1 : Via Homebrew (Recommandé 🍺)
+
+C'est la méthode la plus simple pour installer, mettre à jour et exécuter `cratedig` de manière isolée sans se soucier des dépendances Python globales :
+
+```bash
+# Ajouter le Tap Homebrew
+brew tap elkwaet/cratedig
+
+# Installer DJ Crate Digger
+brew install cratedig
+```
+
+### Option 2 : Installation manuelle globale (sans sudo)
+
+Si tu n'utilises pas Homebrew ou si tu souhaites contribuer au développement :
 
 1.  **Cloner le dépôt dans ton espace de travail (ex: `~/PROJ-DEV/`)** :
     ```bash
-    git clone [repo-url] dj-crate-digger
+    git clone https://gitlab.com/elkwaet/dj-crate-digger.git
     cd dj-crate-digger
     ```
 
