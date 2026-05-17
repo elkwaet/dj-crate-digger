@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Script de lancement pour DJ Crate Digger
+# Développé pour la communauté par @qwashenergy (Elkwaet)
+
+# Résolution robuste du chemin (gère les liens symboliques pour exécution globale)
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+PROJECT_DIR="$( cd -P "$( dirname "$SOURCE" )"/.. >/dev/null 2>&1 && pwd )"
+
+# Navigation vers le dossier racine du projet pour assurer la cohérence des chemins d'import
+cd "$PROJECT_DIR" || exit
+
+VENV_DIR="$PROJECT_DIR/.venv"
+
+# Vérification et activation de l'environnement virtuel
+if [ ! -d "$VENV_DIR" ]; then
+    echo "🔧 Création de l'environnement virtuel Python..."
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install --quiet -r requirements.txt
+else
+    source .venv/bin/activate
+fi
+
+# Lancement du point d'entrée CLI avec transmission des arguments globaux
+export PYTHONPATH=$PYTHONPATH:.
+python3 src/cli.py "$@"
